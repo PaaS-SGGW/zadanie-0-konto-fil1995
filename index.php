@@ -1,10 +1,14 @@
 <?php
+echo "hello!<br>";
 $conn = pg_connect(getenv("DATABASE_URL"));
 if($conn) {echo "connected";} else {echo "not connected";}
-$query = "INSERT INTO users (nick, email, pass) VALUES ('fm','fm@a.pl','akjsdakjdhakdhaskj')";
-$result = pg_query($conn,$query);
-if(!$result){
-    echo "Insert failed:  ";
-    echo pg_result_error($result);
+$users = pg_query($conn, 'SELECT * FROM USERS');
+$arr = pg_fetch_all($users);
+echo "<br> lista userow:<br>";
+foreach($arr as $item) {
+  
+    echo $item['id'] . "   ";
+    echo $item['nick'] . "   ";
+    echo $item['email'] . "   <br>";
 }
 ?>
